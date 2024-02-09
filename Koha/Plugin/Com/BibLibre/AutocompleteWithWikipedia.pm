@@ -6,7 +6,7 @@ use base qw(Koha::Plugins::Base);
 
 use C4::Context;
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 our $metadata = {
     name   => 'AutocompleteWithWikipedia',
@@ -51,15 +51,29 @@ sub uninstall {
     return 1;
 }
 
+sub opac_head {
+
+    return q%
+<link href="/intranet-tmpl/lib/jquery/jquery-ui-1.13.1.min.css" rel="stylesheet" type="text/css">
+%;
+}
+
 sub opac_js {
     my ( $self ) = @_;
 
+    # Needs Jquery UI autocomplete lib from staff interface
     return q%
+<script src="/intranet-tmpl/lib/jquery/jquery-ui-1.13.1.min.js"></script>
 <script>
+
+// Get API URL with current lang
+var currlang = ($("html").attr("lang") || "en").split("-")[0];
+var apiurl = "https://" + currlang + ".wikipedia.org/w/api.php";
+
 $("#searchform input[name='q']").autocomplete({
   source: function(request, response) {
     $.ajax({
-      url: "https://fr.wikipedia.org/w/api.php",
+      url: apiurl,
       dataType: "json",
       data: {
         "action": "opensearch",
@@ -78,6 +92,7 @@ $("#searchform input[name='q']").autocomplete({
       }
     });
   },
+  minLength: 3,
   open: function() {
     // nothing for now
   }
