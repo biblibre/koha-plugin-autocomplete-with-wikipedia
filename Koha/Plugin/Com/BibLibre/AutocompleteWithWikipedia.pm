@@ -6,15 +6,15 @@ use base qw(Koha::Plugins::Base);
 
 use C4::Context;
 
-our $VERSION = '0.2';
+our $VERSION = '1.0';
 
 our $metadata = {
     name   => 'AutocompleteWithWikipedia',
     author => 'BibLibre',
     description => 'Autocomplete search terms with Wikipedia datas via its API',
     date_authored   => '2024-02-09',
-    date_updated    => '2024-02-09',
-    minimum_version => '18.11',
+    date_updated    => '2024-10-09',
+    minimum_version => '23.11',
     maximum_version => undef,
     version         => $VERSION,
 };
@@ -54,7 +54,7 @@ sub uninstall {
 sub opac_head {
 
     return q%
-<link href="/intranet-tmpl/lib/jquery/jquery-ui-1.13.1.min.css" rel="stylesheet" type="text/css">
+<link href="/intranet-tmpl/lib/jquery/jquery-ui-1.13.2.min.css" rel="stylesheet" type="text/css">
 %;
 }
 
@@ -63,7 +63,7 @@ sub opac_js {
 
     # Needs Jquery UI autocomplete lib from staff interface
     return q%
-<script src="/intranet-tmpl/lib/jquery/jquery-ui-1.13.1.min.js"></script>
+<script src="/intranet-tmpl/lib/jquery/jquery-ui-1.13.2.min.js"></script>
 <script>
 
 // Get API URL with current lang
